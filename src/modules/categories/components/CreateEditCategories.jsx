@@ -3,11 +3,9 @@ import { useTranslation } from "react-i18next";
 import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import { KEYS } from "../../../constants/key.js";
 import { URLS } from "../../../constants/url.js";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input } from "antd";
 import { get } from "lodash";
 import usePutQuery from "../../../hooks/api/usePatchQuery.js";
-import TextArea from "antd/es/input/TextArea";
-import useGetAllQuery from "../../../hooks/api/useGetAllQuery.js";
 
 const CreateEditCategories = ({ selected, setIsModalOpen }) => {
     const { t } = useTranslation();
@@ -19,8 +17,6 @@ const CreateEditCategories = ({ selected, setIsModalOpen }) => {
     const { mutate: mutateEdit, isLoading: isLoadingEdit } = usePutQuery({
         listKeyId: KEYS.categories_list,
     });
-
-    // Swaggerda dealerlar yo'q: formdan ularni olib tashlaymiz
 
     useEffect(() => {
         form.setFieldsValue({

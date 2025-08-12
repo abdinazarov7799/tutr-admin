@@ -2,6 +2,16 @@ export const URLS = {
   // Auth
   sign_in: '/api/v1/admin/auth/sign-in',
 
+  // Common
+  refresh_token: '/api/v1/common/refresh-token',
+  enums_all: '/api/v1/common/enums/all',
+  enums_weekdays: '/api/v1/common/enums/weekdays',
+  enums_student_reward_statuses: '/api/v1/common/enums/student-reward-statuses',
+  enums_roles: '/api/v1/common/enums/roles',
+  enums_payment_statuses: '/api/v1/common/enums/payment-statuses',
+  enums_languages: '/api/v1/common/enums/languages',
+  enums_duration_units: '/api/v1/common/enums/duration-units',
+
   // Rewards
   rewards_create: '/api/v1/admin/rewards',
   rewards_filter: '/api/v1/admin/rewards/filter',
@@ -69,4 +79,26 @@ export const URLS = {
   course_reviews_delete: (id) => `/api/v1/admin/course-reviews/${id}`,
   course_reviews_stats_all: '/api/v1/admin/course-reviews/stats',
   course_reviews_stats_by_course: (courseId) => `/api/v1/admin/course-reviews/course/${courseId}/stats`,
+
+  // Admins
+  admins_list: '/api/v1/admin/admins',
+  admin_create: '/api/v1/admin/admins',
+  admin_get: (id) => `/api/v1/admin/admins/${id}`,
+  admin_patch: (id) => `/api/v1/admin/admins/${id}`,
+  admin_delete: (id) => `/api/v1/admin/admins/${id}`,
+
+  // Teachers
+  teachers_list: '/api/v1/admin/teachers',
+  teacher_get: (id) => `/api/v1/admin/teachers/${id}`,
+
+  // Students
+  students_list: '/api/v1/admin/students',
+  student_get: (id) => `/api/v1/admin/students/${id}`,
+
+  // Languages
+  language_get_all: '/api/v1/admin/language/get-all',
+  language_get_by_lang: '/api/v1/admin/language/get-by-lang',
+  language_create_with_key: '/api/v1/admin/language/create-with-key',
+  language_create_key: '/api/v1/admin/language/create-key',
+  language_create_edit: '/api/v1/admin/language/create-edit',
 };

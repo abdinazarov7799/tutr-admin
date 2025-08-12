@@ -26,6 +26,9 @@ import CategoriesPage from "../modules/categories/CategoriesPage.jsx";
 import BoostPricesPage from "../modules/boost-prices/BoostPricesPage.jsx";
 import CourseReviewsPage from "../modules/course-reviews/CourseReviewsPage.jsx";
 import BoostStatsPage from "../modules/boost-stats/BoostStatsPage.jsx";
+import TeachersPage from "../modules/teachers/TeachersPage.jsx";
+import StudentsPage from "../modules/students/StudentsPage.jsx";
+import LanguagePage from "../modules/language/LanguagePage.jsx";
 
 const Router = () => {
   return (
@@ -42,6 +45,9 @@ const Router = () => {
               <Route path={"/boost-prices"} element={<BoostPricesPage />}/>
               <Route path={"/course-reviews"} element={<CourseReviewsPage />}/>
               <Route path={"/boost-stats"} element={<BoostStatsPage />}/>
+              <Route path={"/teachers"} element={<TeachersPage />}/>
+              <Route path={"/students"} element={<StudentsPage />}/>
+              <Route path={"/language"} element={<LanguagePage />}/>
               <Route path={"auth/*"} element={<Navigate to={"/rewards"} replace />}/>
               <Route path={"/"} element={<Navigate to={"/rewards"} replace />}/>
               <Route path={"*"} element={<NotFoundPage />} />

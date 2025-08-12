@@ -51,6 +51,19 @@ const DashboardSidebar = ({collapsed,setCollapsed}) => {
           { label: t('Boost Usage'), key: '/boost-stats' },
         ],
       },
+      {
+        label: t('Users'),
+        key: 'users',
+        children: [
+          { label: t('Admins'), key: '/admins' },
+          { label: t('Teachers'), key: '/teachers' },
+          { label: t('Students'), key: '/students' },
+        ]
+      },
+      {
+        label: t('Language'),
+        key: '/language',
+      },
     ]
 
   return(

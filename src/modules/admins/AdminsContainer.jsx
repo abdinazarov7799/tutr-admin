@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
 import Container from "../../components/Container.jsx";
-import {Button, Input, Modal, Pagination, Popconfirm, Popover, Row, Space, Table, Typography} from "antd";
-import {get, isArray} from "lodash";
+import {Button, Input, Modal, Pagination, Popconfirm, Row, Space, Table, Typography} from "antd";
+import {get} from "lodash";
 import {useTranslation} from "react-i18next";
-import usePaginateQuery from "../../hooks/api/usePaginateQuery.js";
+import { request } from "../../services/api";
 import {KEYS} from "../../constants/key.js";
 import {URLS} from "../../constants/url.js";
-import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import useDeleteQuery from "../../hooks/api/useDeleteQuery.js";
 import CreateEditAdmin from "./components/CreateEditAdmin.jsx";
-import useGetAllQuery from "../../hooks/api/useGetAllQuery.js";
 
 const AdminsContainer = () => {
     const {t} = useTranslation();
@@ -19,24 +18,29 @@ const AdminsContainer = () => {
     const [isCreateModalOpenCreate, setIsCreateModalOpen] = useState(false)
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
-    const {data,isLoading} = usePaginateQuery({
-        key: KEYS.admins_list,
-        url: URLS.admins_list,
-        params: {
-            params: {
-                size: 10,
-                search: searchKey
-            }
-        },
-        page
-    });
+    const [list, setList] = useState({content: [], totalElements: 0, totalPages: 0});
+    const [isLoading, setIsLoading] = useState(false);
 
-    const { mutate } = useDeleteQuery({
-        listKeyId: KEYS.admins_list
-    });
-    const useDelete = (id) => {
-        mutate({url: `${URLS.admin_delete}/${id}`})
+    const fetchList = async () => {
+        setIsLoading(true)
+        try {
+            const params = new URLSearchParams();
+            if (searchKey) params.append('filterDTO', JSON.stringify({fullName: searchKey, username: searchKey}));
+            params.append('page', page);
+            params.append('size', 10);
+            const {data} = await request.get(`${URLS.admins_list}?${params.toString()}`);
+            setList({
+                content: get(data,'content',[]),
+                totalElements: get(data,'totalElements',0),
+                totalPages: get(data,'totalPages',0),
+            })
+        } finally { setIsLoading(false) }
     }
+
+    React.useEffect(()=>{ fetchList() }, [page, searchKey])
+
+    const { mutate } = useDeleteQuery({ listKeyId: KEYS.admins_list });
+    const useDelete = (id) => { mutate({url: URLS.admin_delete(id)}) }
 
     const columns = [
         {
@@ -112,7 +116,7 @@ const AdminsContainer = () => {
 
                 <Table
                     columns={columns}
-                    dataSource={get(data,'data.content',[])}
+                    dataSource={get(list,'content',[])}
                     bordered
                     size={"middle"}
                     pagination={false}
@@ -121,12 +125,12 @@ const AdminsContainer = () => {
 
                 <Row justify={"space-between"} style={{marginTop: 10}}>
                     <Typography.Title level={4}>
-                        {t("Miqdori")}: {get(data,'data.totalElements')} {t("ta")}
+                        {t("Miqdori")}: {get(list,'totalElements')} {t("ta")}
                     </Typography.Title>
                     <Pagination
                         current={page+1}
                         onChange={(page) => setPage(page - 1)}
-                        total={get(data,'data.totalPages') * 10 }
+                        total={get(list,'totalPages') * 10 }
                         showSizeChanger={false}
                     />
                 </Row>

@@ -2,23 +2,17 @@ import React, {useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import {KEYS} from "../../../constants/key.js";
-import {URLS} from "../../../constants/url.js";
 import {Button, Form, Input, Select} from "antd";
 import {get} from "lodash";
 import usePutQuery from "../../../hooks/api/usePatchQuery.js";
-import config from "../../../config.js";
+import { URLS } from "../../../constants/url.js";
 
 const CreateEditAdmin = ({itemData,setIsModalOpen}) => {
     const { t } = useTranslation();
     const [form] = Form.useForm();
 
-    const { mutate, isLoading } = usePostQuery({
-        listKeyId: KEYS.admins_list,
-    });
-    const { mutate:mutateEdit, isLoading:isLoadingEdit } = usePutQuery({
-        listKeyId: KEYS.admins_list,
-        hideSuccessToast: false
-    });
+    const { mutate, isLoading } = usePostQuery({ listKeyId: KEYS.admins_list });
+    const { mutate:mutateEdit, isLoading:isLoadingEdit } = usePutQuery({ listKeyId: KEYS.admins_list });
 
     useEffect(() => {
         form.setFieldsValue({
@@ -29,7 +23,7 @@ const CreateEditAdmin = ({itemData,setIsModalOpen}) => {
     const onFinish = (values) => {
         if (itemData){
             mutateEdit(
-                { url: `${URLS.admin_edit}/${get(itemData,'id')}`, attributes: values },
+                { url: URLS.admin_patch(get(itemData,'id')), attributes: values },
                 {
                     onSuccess: () => {
                         setIsModalOpen(false);
@@ -38,7 +32,7 @@ const CreateEditAdmin = ({itemData,setIsModalOpen}) => {
             );
         }else {
             mutate(
-                { url: URLS.admin_add, attributes: values },
+                { url: URLS.admin_create, attributes: values },
                 {
                     onSuccess: () => {
                         setIsModalOpen(false);
@@ -72,24 +66,17 @@ const CreateEditAdmin = ({itemData,setIsModalOpen}) => {
                     <Input.Password />
                 </Form.Item>
 
-                <Form.Item
-                    label={t("Role")}
-                    name="roleId"
-                    rules={[{required: true,}]}>
-                    <Select
-                        placeholder={t("Role")}
-                        options={[
-                            {
-                                value: config.ROLE_ID.ROLE_SUPER_ADMIN,
-                                label: t("ROLE_SUPER_ADMIN"),
-                            },
-                            {
-                                value: config.ROLE_ID.ROLE_ADMIN,
-                                label: t("ROLE_ADMIN"),
-                            }
-                        ]}
-                    />
-                </Form.Item>
+            <Form.Item label={t("Role")} name="role" rules={[{required: true}]}>
+                <Select
+                    placeholder={t("Role")}
+                    options={[
+                        { value: 'SUPER_ADMIN', label: t('SUPER_ADMIN') },
+                        { value: 'ADMIN', label: t('ADMIN') },
+                        { value: 'TEACHER', label: t('TEACHER') },
+                        { value: 'STUDENT', label: t('STUDENT') },
+                    ]}
+                />
+            </Form.Item>
 
                 <Form.Item>
                     <Button block type="primary" htmlType="submit" loading={isLoading || isLoadingEdit}>
