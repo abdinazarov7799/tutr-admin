@@ -4,6 +4,7 @@ import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import { KEYS } from "../../../constants/key.js";
 import { URLS } from "../../../constants/url.js";
 import { Button, Form, Input } from "antd";
+import AsyncSelect from "../../../components/AsyncSelect.jsx";
 import { get } from "lodash";
 import usePutQuery from "../../../hooks/api/usePatchQuery.js";
 
@@ -56,11 +57,15 @@ const CreateEditCategories = ({ selected, setIsModalOpen }) => {
                 <Input />
             </Form.Item>
 
-            <Form.Item label={t('Course Type ID')} name="courseTypeId">
-                <Input type="number" />
+            <Form.Item label={t('Course Type')} name="courseTypeId">
+                <Input />
             </Form.Item>
-            <Form.Item label={t('Parent ID')} name="parentId">
-                <Input type="number" />
+            <Form.Item label={t('Parent Category')} name="parentId">
+                <AsyncSelect
+                    placeholder={t('Parent Category')}
+                    apiPath={URLS.categories_parents}
+                    transformOption={(item) => ({ label: get(item, 'nameUz'), value: get(item, 'id') })}
+                />
             </Form.Item>
             <Form.Item label={t('Active')} name="active" valuePropName="checked">
                 <input type="checkbox" />

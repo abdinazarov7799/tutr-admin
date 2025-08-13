@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Container from '../../components/Container.jsx';
 import { URLS } from '../../constants/url.js';
 import { request } from '../../services/api';
+import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 
 const CourseFormatsContainer = () => {
   const { t } = useTranslation();

@@ -1,5 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Button, Form, Input, Modal, Pagination, Row, Space, Switch, Table, Typography, notification } from 'antd';
+import {
+  Button,
+  Form,
+  Input,
+  Modal,
+  Pagination,
+  Row,
+  Space,
+  Switch,
+  Table,
+  Typography,
+  notification,
+  Popconfirm
+} from 'antd';
 import { get } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import Container from '../../components/Container.jsx';
@@ -168,13 +181,13 @@ const RewardsContainer = () => {
             <Form.Item label={t('Name EN')} name="nameEn" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
-            <Form.Item label={t('Required Subscriptions')} name="requiredSubscriptions" rules={[{ required: true }]}> 
+            <Form.Item label={t('Required Subscriptions')} name="requiredSubscriptions" rules={[{ required: true }]}>
               <Input type="number" />
             </Form.Item>
-            <Form.Item label={t('Required Months')} name="requiredMonths" rules={[{ required: true }]}> 
+            <Form.Item label={t('Required Months')} name="requiredMonths" rules={[{ required: true }]}>
               <Input type="number" />
             </Form.Item>
-            <Form.Item label={t('Priority')} name="priority" rules={[{ required: true }]}> 
+            <Form.Item label={t('Priority')} name="priority" rules={[{ required: true }]}>
               <Input type="number" />
             </Form.Item>
             <Form.Item label={t('Active')} name="active" valuePropName="checked">

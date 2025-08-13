@@ -55,7 +55,7 @@ const DashboardSidebar = ({collapsed,setCollapsed}) => {
         label: t('Users'),
         key: 'users',
         children: [
-          { label: t('Admins'), key: '/admins' },
+          // { label: t('Admins'), key: '/admins' },
           { label: t('Teachers'), key: '/teachers' },
           { label: t('Students'), key: '/students' },
         ]
